@@ -22,4 +22,18 @@
   <!-- </div> -->
   
   <button ion-button full (click)="startScan()">Scan Wifi</button>
+
+  <div *ngFor="let dev of devs">
+    <h3>Device: {{dev['SSID']}}</h3>
+    <br>
+    <h3>Mac Address: {{dev['BSSID']}}</h3>
+    <br>
+    <h3>Level: {{dev['level']}} mDb</h3>
+    <br>
+    <h3>Frequency: {{dev['frequency']}} Mhz</h3>
+    <br>
+    <h3>Distance: {{dev['distance']}} meters</h3>
+    <br>
+    ///////////////////////////
+  </div>
 </ion-content>

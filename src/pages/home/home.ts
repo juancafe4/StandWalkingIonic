@@ -18,7 +18,7 @@ export class HomePage {
   // d:number = 0;
   // constants = []
   // avg:number = 0;
-  dev:any = null;
+  devs = []
   constructor(public navCtrl: NavController, public platform: Platform, public alertCtrl: AlertController) {
     
 
@@ -35,16 +35,23 @@ export class HomePage {
     
   }
 
+  calculateDistance(levelInDb:number, freqInMHz:number)    {
+   let exp = (27.55 - (20 * Math.log10(freqInMHz)) + Math.abs(levelInDb)) / 20.0;
+   return Math.pow(10.0, exp);
+  }
   startScan() {
+    this.devs = [];
     WifiWizard.getScanResults((devs) => {
       console.log('Netowrk');
       
-      // for (let dev of devs) {
-      //   console.log(Object.keys(dev));
-      // }
+      for (let dev of devs) {
+        let distance = this.calculateDistance(dev['level'], dev['frequency']);
+        dev['distance'] = distance;
+        this.devs.push(dev);
+      }
       let alert = this.alertCtrl.create({
         title: 'Device',
-        subTitle: devs,
+        subTitle: String(this.devs),
         buttons: ['Ok']
       });
       alert.present();
